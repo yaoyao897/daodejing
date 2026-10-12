@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>道德经 · 第一章 — 道可道，非常道</title>
+<style>
+:root{
+  --paper:#f2ecdd; --paper-deep:#e8dfc9; --ink:#1c1915; --ink-soft:#57503f;
+  --cinnabar:#9c2f26; --gold:#a07c3f; --line:rgba(28,25,21,.14);
+  --kai:"Kaiti SC","STKaiti","KaiTi","Noto Serif SC",serif;
+  --song:"Songti SC","STSong","Noto Serif SC","SimSun",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--song);line-height:1.9;
+  background-image:
+    radial-gradient(120% 90% at 50% 0%,transparent 60%,rgba(28,25,21,.05)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+::selection{background:rgba(156,47,38,.22)}
+
+/* ── 顶栏 ── */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:14px clamp(18px,4vw,44px);backdrop-filter:blur(10px);
+  background:linear-gradient(rgba(242,236,221,.85),rgba(242,236,221,.55));
+  border-bottom:1px solid var(--line)}
+nav .brand{font-family:var(--kai);font-size:18px;letter-spacing:.35em;color:var(--ink)}
+nav .brand b{color:var(--cinnabar);font-weight:normal}
+nav .chapters{display:flex;gap:6px;font-size:12px;letter-spacing:.15em;color:var(--ink-soft)}
+nav .chapters span{padding:4px 10px;border:1px solid var(--line);border-radius:3px}
+nav .chapters span.on{border-color:var(--cinnabar);color:var(--cinnabar)}
+
+/* ── 首屏 ── */
+header{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden}
+#ink{position:absolute;inset:0;width:100%;height:100%}
+.hero{position:relative;text-align:center;z-index:2}
+.hero .dao{font-family:var(--kai);font-size:clamp(150px,30vw,330px);line-height:1;
+  color:var(--ink);text-shadow:0 0 60px rgba(242,236,221,.9);
+  animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.025);opacity:.93}}
+.hero h1{font-family:var(--kai);font-weight:normal;font-size:clamp(20px,3vw,30px);
+  letter-spacing:.6em;margin-top:18px;text-indent:.6em}
+.hero .sub{margin-top:14px;font-size:14px;letter-spacing:.35em;color:var(--ink-soft)}
+.seal{display:inline-grid;place-items:center;width:74px;height:74px;margin-top:26px;
+  background:var(--cinnabar);color:#f6efe2;font-family:var(--kai);font-size:19px;line-height:1.25;
+  border-radius:7px;transform:rotate(-4deg);box-shadow:0 8px 26px rgba(156,47,38,.3);
+  writing-mode:vertical-rl;letter-spacing:.15em}
+.scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
+  font-size:12px;letter-spacing:.4em;color:var(--ink-soft);text-indent:.4em;animation:hint 2.4s ease-in-out infinite}
+.scroll-hint::after{content:"";display:block;width:1px;height:44px;margin:12px auto 0;
+  background:linear-gradient(var(--ink-soft),transparent)}
+@keyframes hint{50%{transform:translate(-50%,8px)}}
+
+/* ── 版面 ── */
+main{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 40px}
+section{padding:clamp(60px,9vh,110px) 0 30px}
+.kicker{display:flex;align-items:center;gap:16px;font-size:13px;letter-spacing:.45em;color:var(--cinnabar);margin-bottom:8px}
+.kicker::before{content:"";width:44px;height:1px;background:var(--cinnabar)}
+h2{font-family:var(--kai);font-weight:normal;font-size:clamp(30px,4.5vw,44px);margin-bottom:34px}
+h2 small{display:block;font:12px var(--song);letter-spacing:.35em;color:var(--ink-soft);margin-top:8px}
+
+/* 原文 */
+.read-toggle{display:inline-flex;border:1px solid var(--ink);border-radius:4px;overflow:hidden;font-size:13px;letter-spacing:.2em;margin-bottom:26px}
+.read-toggle button{all:unset;cursor:pointer;padding:7px 20px;font-family:var(--song);color:var(--ink-soft)}
+.read-toggle button.on{background:var(--ink);color:var(--paper)}
+.original{display:flex;gap:clamp(24px,5vw,70px);align-items:flex-start;flex-wrap:wrap}
+.scripture{font-family:var(--kai);font-size:clamp(30px,4.6vw,46px);line-height:1.75;letter-spacing:.12em}
+.scripture.vert{writing-mode:vertical-rl;height:clamp(400px,58vw,560px);letter-spacing:.18em;text-orientation:upright}
+.scripture .ph{cursor:pointer;padding:0 .04em;border-radius:4px;transition:.25s;border-bottom:2px solid transparent}
+.scripture .ph:hover{background:rgba(156,47,38,.08)}
+.scripture .ph.on{color:var(--cinnabar);border-bottom-color:var(--cinnabar)}
+.scripture .ph.done{color:var(--ink-soft)}
+.note-card{flex:1;min-width:280px;position:sticky;top:90px;border:1px solid var(--line);border-radius:10px;
+  background:linear-gradient(160deg,#f6f1e4,#ece4d0);padding:28px 30px;box-shadow:0 14px 40px rgba(28,25,21,.08)}
+.note-card .nc-ph{font-family:var(--kai);font-size:24px;color:var(--cinnabar);margin-bottom:10px}
+.note-card p{font-size:15.5px;color:var(--ink-soft)}
+.note-card .nc-tip{font-size:12px;letter-spacing:.25em;color:var(--gold);margin-bottom:14px}
+
+/* 译文 */
+.trans{display:grid;gap:22px}
+.trans .row{display:grid;grid-template-columns:minmax(200px,.9fr) 1.1fr;gap:26px;align-items:baseline;
+  border-bottom:1px dashed var(--line);padding-bottom:20px}
+.trans .row:last-child{border:none}
+.trans .zh{font-size:17px;color:var(--ink)}
+.trans .en{font-size:14px;color:var(--ink-soft);font-style:italic;line-height:1.8}
+@media(max-width:640px){.trans .row{grid-template-columns:1fr;gap:6px}}
+
+/* 故事 */
+.story{border-top:1px solid var(--line)}
+.act{display:grid;grid-template-columns:120px 1fr;gap:clamp(16px,4vw,44px);margin:44px 0}
+.act .no{font-family:var(--kai);font-size:15px;color:var(--cinnabar);letter-spacing:.3em;writing-mode:vertical-rl;border-right:1px solid var(--line);padding-right:14px}
+.act h3{font-family:var(--kai);font-weight:normal;font-size:23px;margin-bottom:12px}
+.act p{color:var(--ink-soft);font-size:16px;max-width:62ch}
+.dlg{margin:26px 0;display:grid;gap:16px}
+.dlg .b{max-width:78%;border:2px solid var(--ink);border-radius:14px;padding:14px 22px;
+  font-family:var(--kai);font-size:19px;background:#f6f1e4;box-shadow:5px 6px 0 rgba(28,25,21,.12);
+  opacity:0;transform:translateY(18px)}
+.dlg .b .who{display:block;font:11px var(--song);letter-spacing:.3em;color:var(--ink-soft);margin-bottom:4px}
+.dlg .b.l{justify-self:start}
+.dlg .b.r{justify-self:end;border-color:var(--cinnabar)}
+.dlg .b.punch{max-width:100%;border-color:var(--cinnabar);border-width:3px;font-size:23px;text-align:center}
+.dlg .b.punch em{color:var(--cinnabar);font-style:normal}
+.dlg.vis .b{animation:pop .55s cubic-bezier(.2,1.4,.4,1) forwards}
+.dlg.vis .b:nth-child(2){animation-delay:.45s}.dlg.vis .b:nth-child(3){animation-delay:.9s}
+.dlg.vis .b:nth-child(4){animation-delay:1.35s}.dlg.vis .b:nth-child(5){animation-delay:1.8s}
+@keyframes pop{to{opacity:1;transform:none}}
+.moral{margin-top:40px;border-left:4px solid var(--cinnabar);background:linear-gradient(90deg,rgba(156,47,38,.07),transparent 70%);
+  padding:22px 28px;font-size:16px;color:var(--ink)}
+.moral b{color:var(--cinnabar);font-weight:normal;font-family:var(--kai)}
+
+/* 卡片群 */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{border:1px solid var(--line);border-radius:10px;padding:26px 24px;background:rgba(255,255,255,.35);
+  transition:.35s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-5px);box-shadow:0 16px 42px rgba(28,25,21,.12);border-color:rgba(156,47,38,.4)}
+.card .num{font-family:var(--kai);font-size:15px;color:var(--cinnabar);letter-spacing:.3em;margin-bottom:10px}
+.card h4{font-family:var(--kai);font-weight:normal;font-size:21px;margin-bottom:10px}
+.card p{font-size:14.5px;color:var(--ink-soft)}
+
+/* 人生道理 */
+.maxims{counter-reset:m;display:grid;gap:0}
+.maxim{display:grid;grid-template-columns:76px 1fr;gap:22px;padding:26px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+.maxim:last-child{border:none}
+.maxim::before{counter-increment:m;content:counter(m,cjk-ideographic);font-family:var(--kai);font-size:44px;color:var(--cinnabar);text-align:center}
+.maxim h4{font-family:var(--kai);font-weight:normal;font-size:22px;margin-bottom:6px}
+.maxim p{font-size:15.5px;color:var(--ink-soft);max-width:64ch}
+
+/* 哲学对话 */
+.pairs{display:grid;gap:18px}
+.pair{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pair .east{background:rgba(156,47,38,.05);padding:24px;border-right:1px dashed var(--line)}
+.pair .west{padding:24px}
+.pair .tag{font-size:11px;letter-spacing:.35em;color:var(--gold);margin-bottom:8px}
+.pair q{display:block;font-family:var(--kai);font-size:19px;line-height:1.7;quotes:"「" "」"}
+.pair .src{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
+.pair .meet{grid-column:1/-1;padding:13px 24px;font-size:13.5px;color:var(--ink-soft);
+  border-top:1px dashed var(--line);background:rgba(255,255,255,.4)}
+.pair .meet b{color:var(--cinnabar);font-weight:normal}
+@media(max-width:700px){.pair{grid-template-columns:1fr}.pair .east{border-right:none;border-bottom:1px dashed var(--line)}}
+
+/* 视频 */
+.film{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 70px rgba(28,25,21,.28);border:1px solid var(--line)}
+.film video{display:block;width:100%;aspect-ratio:16/9;background:#141821}
+.film .cap{padding:16px 22px;font-size:13px;letter-spacing:.15em;color:var(--ink-soft);background:#ece4d0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* 尾声 */
+footer{text-align:center;padding:80px 0 60px;color:var(--ink-soft)}
+footer .next{font-family:var(--kai);font-size:20px;letter-spacing:.3em;margin-bottom:18px}
+footer .tiny{font-size:12px;letter-spacing:.2em;opacity:.7}
+
+/* 入场动效 */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.3,1),transform .9s cubic-bezier(.2,.7,.3,1)}
+.rv.vis{opacity:1;transform:none}
+/* ?flat —— 静态导出/截图模式 */
+body.flat header{min-height:760px}
+body.flat .rv,body.flat .dlg .b{opacity:1!important;transform:none!important;transition:none;animation:none}
+body.flat #ink{display:none}
+
+/* ── 影像：封面卡 + 灯箱 + 常驻播放钮 ── */
+.film .thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;cursor:pointer;
+  background:#141821 url(video/out/poster.jpg) center/cover}
+.film .thumb .ring{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(16,14,11,.15),rgba(16,14,11,.42))}
+.film .thumb .pc{width:96px;height:96px;border-radius:50%;background:rgba(242,236,221,.94);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.2,.8,.3,1)}
+.film .thumb .pc::after{content:"";border-left:26px solid var(--cinnabar);border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:8px}
+.film .thumb:hover .pc{transform:scale(1.08)}
+.film .thumb .hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font-family:var(--kai);font-size:15px;letter-spacing:.3em;color:#f2ecdd;opacity:.9}
+
+.vlight{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
+  background:rgba(16,14,11,.9);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .35s}
+.vlight.open{opacity:1;pointer-events:auto}
+.vlight video{width:min(1120px,92vw);aspect-ratio:16/9;background:#000;border-radius:12px;box-shadow:0 40px 120px rgba(0,0,0,.65)}
+.vlight .x{position:absolute;top:24px;right:32px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(242,236,221,.4);
+  background:transparent;color:#f2ecdd;font-size:20px;cursor:pointer;transition:background .2s}
+.vlight .x:hover{background:rgba(242,236,221,.15)}
+
+.playbtn{position:fixed;right:26px;bottom:26px;z-index:70;display:flex;align-items:center;gap:12px;
+  padding:12px 24px 12px 12px;border:1px solid rgba(242,236,221,.12);border-radius:999px;
+  background:var(--ink);color:var(--paper);font-family:var(--kai);font-size:16px;letter-spacing:.15em;cursor:pointer;
+  box-shadow:0 12px 34px rgba(28,25,21,.4);transition:transform .25s,box-shadow .25s}
+.playbtn:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(28,25,21,.5)}
+.playbtn .dot{position:relative;width:36px;height:36px;border-radius:50%;background:var(--cinnabar);display:flex;align-items:center;justify-content:center}
+.playbtn .dot::after{content:"";border-left:12px solid #f6efe2;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
+.playbtn .dot::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--cinnabar);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{transform:scale(.8);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+body.flat .playbtn{display:none}
+@media(max-width:700px){.playbtn{font-size:14px;padding:10px 18px 10px 10px}}
+</style>
+<style>
+/* ── 章节选择器 ── */
+.chsel{position:relative}
+.chsel>button{all:unset;cursor:pointer;font-family:var(--song);font-size:13px;letter-spacing:.2em;
+  color:var(--ink);padding:5px 14px 5px 12px;border:1px solid var(--cinnabar);border-radius:3px;color:var(--cinnabar)}
+.chsel>button:hover{background:rgba(156,47,38,.08)}
+.chsel-mask{position:fixed;inset:0;z-index:98;background:rgba(28,25,21,.4);backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:.25s}
+.chsel-panel{position:fixed;left:50%;top:72px;transform:translateX(-50%) translateY(-8px);z-index:99;
+  width:min(960px,94vw);max-height:76vh;overflow:auto;background:var(--paper);
+  border:1px solid var(--line);border-radius:8px;padding:26px 30px 30px;
+  box-shadow:0 24px 60px rgba(28,25,21,.25);opacity:0;pointer-events:none;transition:.25s}
+body.chsel-open .chsel-mask,body.chsel-open .chsel-panel{opacity:1;pointer-events:auto}
+body.chsel-open .chsel-panel{transform:translateX(-50%) translateY(0)}
+.chsel-panel .ph{font-family:var(--kai);font-size:15px;letter-spacing:.4em;color:var(--ink-soft);margin-bottom:16px}
+.chsel-panel .ph b{color:var(--cinnabar);font-weight:normal}
+.chsel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.chsel-grid a{display:block;text-decoration:none;color:var(--ink);padding:10px 12px;
+  border:1px solid var(--line);border-radius:5px;transition:.2s}
+.chsel-grid a:hover{border-color:var(--cinnabar);background:rgba(156,47,38,.06)}
+.chsel-grid .n{font-size:11px;letter-spacing:.2em;color:var(--cinnabar)}
+.chsel-grid .t{font-family:var(--kai);font-size:17px;display:block;margin-top:2px}
+.chsel-grid a.cur{border-color:var(--cinnabar);background:rgba(156,47,38,.1)}
+.chsel-grid span.todo{display:block;padding:10px 12px;opacity:.32}
+.chsel-grid span.todo .n{font-size:11px;letter-spacing:.2em;color:var(--ink-soft)}
+.chsel-grid span.todo .t{font-family:var(--kai);font-size:15px;display:block;margin-top:2px}
+@media(max-width:640px){.chsel-panel{top:60px;padding:18px 16px}.chsel-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" style="all:unset;cursor:pointer"><div class="brand">道德经 <b>·</b> 精读</div></a>
+  <div class="chapters">
+    <a href="../index.html" style="all:unset;cursor:pointer"><span>目录</span></a>
+    <div class="chsel"><button id="chsel-btn">第二章 ▾</button></div>
+  </div>
+</nav>
+<div class="chsel-mask" onclick="document.body.classList.remove('chsel-open')"></div>
+<div class="chsel-panel">
+  <div class="ph">道德经 · 八十一章 <b>·</b> 已上线 8 章</div>
+  <div class="chsel-grid"><a href="../第01章_道可道非常道/index.html"><span class="n">第一章</span><span class="t">道可道，非常道</span></a><a href="../第02章_天下皆知美之为美/index.html" class="cur"><span class="n">第二章</span><span class="t">天下皆知美之为美</span></a><a href="../第03章_不尚贤/index.html"><span class="n">第三章</span><span class="t">不尚贤，使民不争</span></a><a href="../第04章_道冲不盈/index.html"><span class="n">第四章</span><span class="t">道冲，而用之或不盈</span></a><a href="../第05章_天地不仁/index.html"><span class="n">第五章</span><span class="t">天地不仁</span></a><a href="../第06章_谷神不死/index.html"><span class="n">第六章</span><span class="t">谷神不死</span></a><a href="../第07章_天长地久/index.html"><span class="n">第七章</span><span class="t">天长地久</span></a><a href="../第08章_上善若水/index.html"><span class="n">第八章</span><span class="t">上善若水</span></a><span class="todo"><span class="n">第九章</span><span class="t">持而盈之，不如其已</span></span><span class="todo"><span class="n">第十章</span><span class="t">载营魄抱一</span></span><span class="todo"><span class="n">第十一章</span><span class="t">三十辐共一毂</span></span><span class="todo"><span class="n">第十二章</span><span class="t">五色令人目盲</span></span><span class="todo"><span class="n">第十三章</span><span class="t">宠辱若惊</span></span><span class="todo"><span class="n">第十四章</span><span class="t">视之不见名曰夷</span></span><span class="todo"><span class="n">第十五章</span><span class="t">古之善为士者</span></span><span class="todo"><span class="n">第十六章</span><span class="t">致虚极，守静笃</span></span><span class="todo"><span class="n">第十七章</span><span class="t">太上，下知有之</span></span><span class="todo"><span class="n">第十八章</span><span class="t">大道废，有仁义</span></span><span class="todo"><span class="n">第十九章</span><span class="t">绝圣弃智</span></span><span class="todo"><span class="n">第二十章</span><span class="t">绝学无忧</span></span><span class="todo"><span class="n">第二十一章</span><span class="t">孔德之容</span></span><span class="todo"><span class="n">第二十二章</span><span class="t">曲则全</span></span><span class="todo"><span class="n">第二十三章</span><span class="t">希言自然</span></span><span class="todo"><span class="n">第二十四章</span><span class="t">企者不立</span></span><span class="todo"><span class="n">第二十五章</span><span class="t">有物混成</span></span><span class="todo"><span class="n">第二十六章</span><span class="t">重为轻根</span></span><span class="todo"><span class="n">第二十七章</span><span class="t">善行无辙迹</span></span><span class="todo"><span class="n">第二十八章</span><span class="t">知其雄，守其雌</span></span><span class="todo"><span class="n">第二十九章</span><span class="t">将欲取天下而为之</span></span><span class="todo"><span class="n">第三十章</span><span class="t">以道佐人主者</span></span><span class="todo"><span class="n">第三十一章</span><span class="t">夫佳兵者不祥之器</span></span><span class="todo"><span class="n">第三十二章</span><span class="t">道常无名</span></span><span class="todo"><span class="n">第三十三章</span><span class="t">知人者智</span></span><span class="todo"><span class="n">第三十四章</span><span class="t">大道泛兮</span></span><span class="todo"><span class="n">第三十五章</span><span class="t">执大象，天下往</span></span><span class="todo"><span class="n">第三十六章</span><span class="t">将欲歙之</span></span><span class="todo"><span class="n">第三十七章</span><span class="t">道常无为而无不为</span></span><span class="todo"><span class="n">第三十八章</span><span class="t">上德不德</span></span><span class="todo"><span class="n">第三十九章</span><span class="t">昔之得一者</span></span><span class="todo"><span class="n">第四十章</span><span class="t">反者道之动</span></span><span class="todo"><span class="n">第四十一章</span><span class="t">上士闻道</span></span><span class="todo"><span class="n">第四十二章</span><span class="t">道生一，一生二</span></span><span class="todo"><span class="n">第四十三章</span><span class="t">天下之至柔</span></span><span class="todo"><span class="n">第四十四章</span><span class="t">名与身孰亲</span></span><span class="todo"><span class="n">第四十五章</span><span class="t">大成若缺</span></span><span class="todo"><span class="n">第四十六章</span><span class="t">天下有道</span></span><span class="todo"><span class="n">第四十七章</span><span class="t">不出户，知天下</span></span><span class="todo"><span class="n">第四十八章</span><span class="t">为学日益</span></span><span class="todo"><span class="n">第四十九章</span><span class="t">圣人无常心</span></span><span class="todo"><span class="n">第五十章</span><span class="t">出生入死</span></span><span class="todo"><span class="n">第五十一章</span><span class="t">道生之，德畜之</span></span><span class="todo"><span class="n">第五十二章</span><span class="t">天下有始</span></span><span class="todo"><span class="n">第五十三章</span><span class="t">使我介然有知</span></span><span class="todo"><span class="n">第五十四章</span><span class="t">善建者不拔</span></span><span class="todo"><span class="n">第五十五章</span><span class="t">含德之厚</span></span><span class="todo"><span class="n">第五十六章</span><span class="t">知者不言</span></span><span class="todo"><span class="n">第五十七章</span><span class="t">以正治国</span></span><span class="todo"><span class="n">第五十八章</span><span class="t">其政闷闷</span></span><span class="todo"><span class="n">第五十九章</span><span class="t">治人事天莫若啬</span></span><span class="todo"><span class="n">第六十章</span><span class="t">治大国若烹小鲜</span></span><span class="todo"><span class="n">第六十一章</span><span class="t">大国者下流</span></span><span class="todo"><span class="n">第六十二章</span><span class="t">道者万物之奥</span></span><span class="todo"><span class="n">第六十三章</span><span class="t">为无为，事无事</span></span><span class="todo"><span class="n">第六十四章</span><span class="t">其安易持</span></span><span class="todo"><span class="n">第六十五章</span><span class="t">古之善为道者</span></span><span class="todo"><span class="n">第六十六章</span><span class="t">江海所以能为百谷王</span></span><span class="todo"><span class="n">第六十七章</span><span class="t">天下皆谓我道大</span></span><span class="todo"><span class="n">第六十八章</span><span class="t">善为士者不武</span></span><span class="todo"><span class="n">第六十九章</span><span class="t">用兵有言</span></span><span class="todo"><span class="n">第七十章</span><span class="t">吾言甚易知</span></span><span class="todo"><span class="n">第七十一章</span><span class="t">知不知，上</span></span><span class="todo"><span class="n">第七十二章</span><span class="t">民不畏威</span></span><span class="todo"><span class="n">第七十三章</span><span class="t">勇于敢则杀</span></span><span class="todo"><span class="n">第七十四章</span><span class="t">民不畏死</span></span><span class="todo"><span class="n">第七十五章</span><span class="t">民之饥</span></span><span class="todo"><span class="n">第七十六章</span><span class="t">人之生也柔弱</span></span><span class="todo"><span class="n">第七十七章</span><span class="t">天之道</span></span><span class="todo"><span class="n">第七十八章</span><span class="t">天下莫柔弱于水</span></span><span class="todo"><span class="n">第七十九章</span><span class="t">和大怨</span></span><span class="todo"><span class="n">第八十章</span><span class="t">小国寡民</span></span><span class="todo"><span class="n">第八十一章</span><span class="t">信言不美</span></span></div>
+</div>
+
+<header>
+  <canvas id="ink"></canvas>
+  <div class="hero">
+    <div class="dao">相</div>
+    <h1>天下皆知美之为美</h1>
+    <div class="sub">道德经 · 第二章 · 善恶相生</div>
+    <div><span class="seal">道德經</span></div>
+  </div>
+  <div class="scroll-hint">相 生</div>
+</header>
+
+<main>
+
+<section class="rv" id="yuanwen">
+  <div class="kicker">原 文</div>
+  <h2>经文 <small>ORIGINAL TEXT · 点击字句查看注释</small></h2>
+  <div class="read-toggle">
+    <button id="btnVert" class="on">竖排</button><button id="btnHoriz">横排</button>
+  </div>
+  <div class="original">
+    <div class="scripture vert" id="scripture"><span class="ph" data-n="0">天下皆知美之为美，斯恶已；</span><span class="ph" data-n="1">皆知善之为善，斯不善已。</span><span class="ph" data-n="2">故有无相生，</span><span class="ph" data-n="3">难易相成，</span><span class="ph" data-n="4">长短相形，</span><span class="ph" data-n="5">高下相倾，</span><span class="ph" data-n="6">音声相和，</span><span class="ph" data-n="7">前后相随。</span><span class="ph" data-n="8">是以圣人处无为之事，行不言之教。</span><span class="ph" data-n="9">万物作焉而不辞，</span><span class="ph" data-n="10">生而不有，</span><span class="ph" data-n="11">为而不恃，</span><span class="ph" data-n="12">功成而弗居。</span><span class="ph" data-n="13">夫唯弗居，是以不去。</span></div>
+    <div class="note-card" id="noteCard">
+      <div class="nc-tip">点按左侧经句 · 逐句注释</div>
+      <div class="nc-ph" id="ncPh">天下皆知美之为美，斯恶已</div>
+      <p id="ncBody">当天下人都知道什么是美，丑的观念也就同时产生了。「斯恶已」——恶（丑）由此而生。美丑不是两个独立的东西，它们在同一次命名中被一起造出。</p>
+    </div>
+  </div>
+</section>
+
+<section class="rv" id="yiwen">
+  <div class="kicker">译 文</div>
+  <h2>白话与英译 <small>TRANSLATIONS</small></h2>
+  <div class="trans"><div class="row"><div class="zh">天下人都知道美之所以为美，丑的观念就产生了；都知道善之所以为善，不善的观念也就产生了。</div><div class="en">When all under heaven know beauty as beauty, ugliness is born; when all know good as good, evil is born.</div></div><div class="row"><div class="zh">所以有和无互相生成，难和易互相成就，长和短互相显现，高和下互相倚靠，音和声互相唱和，前和后互相跟随。</div><div class="en">Thus being and non-being generate each other; difficult and easy complete each other; long and short shape each other; high and low lean on each other; sound and silence harmonize; before and after follow one another.</div></div><div class="row"><div class="zh">因此圣人以无为的方式处事，以不言的方式教化。任凭万物兴起而不加干预。</div><div class="en">Therefore the sage acts through non-action and teaches without words; letting all things arise without interference.</div></div><div class="row"><div class="zh">生养而不占有，作为而不依仗，功成而不居功。正因为不居功，所以功劳不会失去。</div><div class="en">Giving life without possessing, acting without claiming, accomplishing without dwelling — precisely because he does not dwell, it cannot be taken away.</div></div></div>
+</section>
+
+<section class="story rv" id="gushi">
+  <div class="kicker">故 事</div>
+  <h2>塞翁失马 <small>《淮南子 · 人间训》—— 为「祸福相生」立传的故事</small></h2>
+<div class="act"><div class="no">其一</div><div><h3>马跑了，他说也许是好事</h3><p>边塞上住着一位通晓天意的老人，人称塞翁。他家养的一匹好马忽然挣脱缰绳，一路跑到了胡人的地界——丢了。邻居们听说了，纷纷上门安慰。老人摆摆手：丢了一匹马，怎么就知道不是一件好事呢？众人面面相觑，只当他自我安慰。</p></div></div>
+<div class="dlg" id="dlg"><div class="b l"><span class="who">邻居</span>老人家，马丢了，节哀啊！</div><div class="b r"><span class="who">塞翁</span>丢了马，怎么就知道不是好事？</div><div class="b l"><span class="who">邻居</span>（数月后马归）大喜！白得一群骏马！</div><div class="b r"><span class="who">塞翁</span>白得的马，怎么就知道不是坏事？</div><div class="b punch"><span class="who">塞翁</span>福兮，<em>祸之所伏</em>——谁知呢？</div></div>
+<div class="act"><div class="no">其二</div><div><h3>摔断腿，他还是那句话</h3><p>几个月后，那匹马果然回来了——还领着一群胡地的骏马。邻居们又来道喜，老人却说：白白得来一群马，怎么就知道不是坏事呢？果不其然，他儿子骑那匹烈马，摔下来断了腿。众人又来安慰，老人还是那句话：说不定是好事。一年后胡人大举入侵，边塞的青壮年都被征去打仗，十个人里死了九个——老人的儿子因为腿瘸，免征入伍。父子俩保住了性命。</p></div></div>
+<div class="moral rv"><b>寓意 ——</b> 祸与福从不单独赴约：失去里埋着得到的种子，得到里也藏着失去的根。塞翁不是算得准，而是看得深——他知道每一次「判定」都言之过早。这正是第二章的本意：对立的两端，永远在互相转化、互相成全。</div>
+</section>
+
+<section class="rv" id="jinyi">
+  <div class="kicker">今 义</div>
+  <h2>比较，是所有烦恼的放大器 <small>WHAT IT MEANS NOW</small></h2>
+  <div class="cards"><div class="card"><div class="num">壹</div><h4>好坏是后来贴的标签</h4><p>被裁员那天下着雨；半年后你庆幸那天下了雨。事情本身没有变——变的是你给它贴的标签。慢一点下结论，很多事要走到下一段才看得懂。</p></div><div class="card"><div class="num">贰</div><h4>没有比较，就没有焦虑</h4><p>同龄人晒房晒车晒年薪——「美」一旦被定义，「丑」就是你。焦虑的大半不是来自处境，而是来自那把别人递给你的尺子。</p></div><div class="card"><div class="num">叁</div><h4>居功者，功最易逝</h4><p>把功劳挂在嘴上，功劳就成了靶子；把事情做好就走开，功劳反而追着你。团队里最被记住的，常是那个不争的人。</p></div><div class="card"><div class="num">肆</div><h4>留白处生万物</h4><p>「无」不是空缺而是可能：杯空才能盛水，心空才能见人。日程表塞满的人，没空遇见转机。</p></div></div>
+</section>
+
+<section class="rv" id="xiushen">
+  <div class="kicker">修 身</div>
+  <h2>可用的人生道理 <small>LIFE LESSONS</small></h2>
+  <div class="maxims"><div class="maxim"><div><h4>别急着给事情定性</h4><p>今天的「祸」，可能是明天的伏笔。遇到坏事时多问一句：「三年后的我，会怎么看这件事？」——塞翁式的问题，是最好的止痛药。</p></div></div><div class="maxim"><div><h4>警惕一切「唯一标准」</h4><p>当全世界都说成功只有一种样子，「失败」就被批量制造出来了。敢不敢用自己的尺子量人生，是自由的开始。</p></div></div><div class="maxim"><div><h4>功成，退一步</h4><p>做完事别急着领赏——居功的引力会把人拽回过去。把位置空出来，功劳自己会说话，而且说得更久。</p></div></div><div class="maxim"><div><h4>善用「无」</h4><p>谈判时的沉默、决策前的空档、忙碌里的留白——「无」不是消极，是让事物自己浮出水面的容器。</p></div></div><div class="maxim"><div><h4>对对立面多一点耐心</h4><p>难的时候想「难易相成」，输的时候想「前后相随」。对立面不是敌人，是还没走完的另一半。</p></div></div></div>
+</section>
+
+<section class="rv" id="gongming">
+  <div class="kicker">共 鸣</div>
+  <h2>东西方在同一处相遇 <small>ECHOES ACROSS PHILOSOPHIES</small></h2>
+  <div class="pairs"><div class="pair">
+      <div class="east"><div class="tag">中 · 老子</div><q>有无相生，难易相成。</q><div class="src">《道德经》第二章</div></div>
+      <div class="west"><div class="tag">西 · 赫拉克利特</div><q>相反者相成：对立统一。</q><div class="src">残篇 · 万物流变与逻各斯</div></div>
+      <div class="meet"><b>共鸣 ——</b> 东西方最早的辩证法几乎同时点火：河水永远在变，而对立正是变化的发动机。</div>
+    </div><div class="pair">
+      <div class="east"><div class="tag">中 · 周易</div><q>一阴一阳之谓道。</q><div class="src">《易传 · 系辞上》</div></div>
+      <div class="west"><div class="tag">西 · 黑格尔</div><q>正题—反题—合题：矛盾推动历史。</q><div class="src">辩证法 · 19 世纪</div></div>
+      <div class="meet"><b>共鸣 ——</b> 一个用阴阳图，一个用三段式——说的都是同一件事：世界靠对立面的互相否定向前走。</div>
+    </div><div class="pair">
+      <div class="east"><div class="tag">中 · 塞翁</div><q>此何遽不为福乎？</q><div class="src">《淮南子 · 人间训》</div></div>
+      <div class="west"><div class="tag">西 · 斯多葛</div><q>Amor fati —— 爱你的命运。</q><div class="src">爱比克泰德 / 尼采复述</div></div>
+      <div class="meet"><b>共鸣 ——</b> 塞翁的「说不定」，和斯多葛的「接受一切发生的」，是同一种与不确定性和解的姿势。</div>
+    </div><div class="pair">
+      <div class="east"><div class="tag">中 · 老子</div><q>功成而弗居。</q><div class="src">《道德经》第二章</div></div>
+      <div class="west"><div class="tag">西 · 老子同门·禅</div><q>事来则应，事去不留。</q><div class="src">禅宗心法</div></div>
+      <div class="meet"><b>共鸣 ——</b> 功劳像手里的沙——攥紧必漏，摊开反而满掌。东方式的不争，是一种更高级的「得到」。</div>
+    </div><div class="pair">
+      <div class="east"><div class="tag">中 · 老子</div><q>高下相倾。</q><div class="src">《道德经》第二章</div></div>
+      <div class="west"><div class="tag">西 · 格式塔心理学</div><q>图形因背景而存在。</q><div class="src">图底关系 · 20 世纪</div></div>
+      <div class="meet"><b>共鸣 ——</b> 没有背景就没有图形，没有「低」就没有「高」——心理学把老子的一句话画成了教科书插图。</div>
+    </div></div>
+</section>
+
+<section class="rv" id="yingxiang">
+  <div class="kicker">影 像</div>
+  <h2>动画 · 塞翁失马 <small>水墨动画 · 1′48″</small></h2>
+  <div class="film">
+    <button class="thumb" id="thumbBtn" aria-label="播放动画" style="background:#141821 url(../video/out/poster-ch02.jpg) center/cover">
+      <span class="ring"><span class="pc"></span></span>
+      <span class="hint">点击播放 · 1′48″</span>
+    </button>
+  </div>
+</section>
+
+<div class="vlight" id="vlight">
+  <button class="x" id="vclose" aria-label="关闭">✕</button>
+  <video id="vfilm" controls playsinline preload="metadata" poster="../video/out/poster-ch02.jpg">
+    <source src="../video/out/ch02.mp4" type="video/mp4">
+  </video>
+</div>
+<button class="playbtn" id="playbtn"><span class="dot"></span>动画 · 塞翁失马</button>
+
+<footer class="rv">
+  <div class="next">第三章 · 不尚贤，使民不争 —— 待续</div>
+  <div><span class="seal" style="width:60px;height:60px;font-size:16px">相生</span></div>
+  <div class="tiny" style="margin-top:22px">道德经精读计划 · 八十一章 · 第二章毕</div>
+</footer>
+
+</main>
+
+<script>
+(function(){var b=document.getElementById('chsel-btn');if(!b)return;
+b.addEventListener('click',function(e){e.stopPropagation();document.body.classList.toggle('chsel-open')});
+document.addEventListener('click',function(e){if(!e.target.closest('.chsel-panel'))document.body.classList.remove('chsel-open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.body.classList.remove('chsel-open')});})();
+</script>
+<script>
+if (location.search.includes('flat')) document.body.classList.add('flat');
+/* ── 水墨流场（首屏 canvas）── */
+(() => {
+  const cv = document.getElementById('ink'), ctx = cv.getContext('2d');
+  let W, H, dpr = Math.min(devicePixelRatio || 1, 2);
+  const fit = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); };
+  fit(); addEventListener('resize', fit);
+
+  const P = 380, ps = [];
+  const field = (x, y, t) =>
+    Math.sin(x * 0.0016 + t * 0.22) + Math.cos(y * 0.0021 - t * 0.17) +
+    Math.sin((x + y) * 0.0009 + t * 0.1);
+  for (let i = 0; i < P; i++) ps.push({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, s: .5+Math.random()*1.8, a: .02+Math.random()*.05 });
+
+  let t = 0, raf;
+  const step = () => {
+    t += 0.008;
+    ctx.fillStyle = 'rgba(242,236,221,0.045)'; ctx.fillRect(0, 0, W, H);
+    for (const p of ps) {
+      const a = field(p.x, p.y, t) * Math.PI;
+      p.x += Math.cos(a) * p.s; p.y += Math.sin(a) * p.s * .8;
+      if (p.x < -20 || p.x > W + 20 || p.y < -20 || p.y > H + 20) { p.x = Math.random()*W; p.y = Math.random()*H; }
+      ctx.fillStyle = `rgba(28,25,21,${p.a})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.s * 1.6, 0, 7); ctx.fill();
+    }
+    raf = requestAnimationFrame(step);
+  };
+  step();
+  // 离开首屏后暂停省电
+  new IntersectionObserver(([e]) => e.isIntersecting ? step() : cancelAnimationFrame(raf)).observe(cv);
+})();
+
+/* ── 逐句注释 ── */
+const NOTES = [["天下皆知美之为美，斯恶已；", "当天下人都知道什么是美，丑的观念也就同时产生了。「斯恶已」——恶（丑）由此而生。美丑不是两个独立的东西，它们在同一次命名中被一起造出。"], ["皆知善之为善，斯不善已。", "人人都知道什么是善，不善也就随之被定义出来。你每划出一条「好」的线，就同时把线外的一切变成了「不好」。"], ["故有无相生，", "所以「有」和「无」互相生成：有容器之「有」，才有中空之「无」可用；有「无」的虚空，「有」才有意义。"], ["难易相成，", "难与易互相成就——没有易做参照，无所谓难；把难事拆成易做的小步，难也就成了易。"], ["长短相形，", "长与短互相显现：尺有所短、寸有所长，长短只在彼此的比较中存在。"], ["高下相倾，", "高与下互相倚靠：谷能成其深，正因为有山之高；楼要立得高，先要把地基打向低处。"], ["音声相和，", "「音」与「声」互相唱和：单音不成曲，和鸣来自差异——参差多态，才成乐章。"], ["前后相随。", "前与后互相跟随：有人在前，才有所谓在后；排队如此，时代与潮流也如此。"], ["是以圣人处无为之事，行不言之教。", "所以圣人以「无为」的姿态处事，用「不言」的方式教化——不横加干预、不立标准答案，让万物依自己的本性生长。"], ["万物作焉而不辞，", "任凭万物兴起而不推辞、不阻拦——来了就承接，走了不挽留。"], ["生而不有，", "生养万物却不据为己有——养育不是为了占有，创造不是为了囤积。"], ["为而不恃，", "有所作为却不依仗其功——帮了忙就放下，不把功劳别在胸前。"], ["功成而弗居。", "功业成就了却不居功——事情成了，退后一步，把光环还给事情本身。"], ["夫唯弗居，是以不去。", "正因为不居功，功劳反而不会被夺走、不会消逝。抓得越紧的东西流失越快；放得下的，才真正留下。"]];
+const card = document.getElementById('noteCard'), ncPh = document.getElementById('ncPh'), ncBody = document.getElementById('ncBody');
+document.querySelectorAll('.ph').forEach(el => el.addEventListener('click', () => {
+  document.querySelectorAll('.ph').forEach(x => x.classList.remove('on'));
+  el.classList.add('on');
+  const n = NOTES[+el.dataset.n];
+  ncPh.textContent = n[0]; ncBody.textContent = n[1];
+  card.animate([{transform:'translateY(8px)',opacity:.4},{transform:'none',opacity:1}],{duration:320,easing:'cubic-bezier(.2,.8,.3,1)'});
+}));
+
+/* ── 竖排/横排 ── */
+const sc = document.getElementById('scripture');
+btnVert.onclick = () => { sc.classList.add('vert'); btnVert.classList.add('on'); btnHoriz.classList.remove('on'); };
+btnHoriz.onclick = () => { sc.classList.remove('vert'); btnHoriz.classList.add('on'); btnVert.classList.remove('on'); };
+
+/* ── 影像灯箱：常驻钮 / 封面卡 → 直接播放 ── */
+const vlight = document.getElementById('vlight'), vfilm = document.getElementById('vfilm');
+const openFilm = () => { vlight.classList.add('open'); vfilm.play().catch(()=>{}); };
+const closeFilm = () => { vlight.classList.remove('open'); vfilm.pause(); };
+playbtn.onclick = openFilm;
+thumbBtn.onclick = openFilm;
+vclose.onclick = closeFilm;
+vlight.addEventListener('click', e => e.target === vlight && closeFilm());
+addEventListener('keydown', e => e.key === 'Escape' && closeFilm());
+
+/* ── 入场动效 ── */
+const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('vis')), {threshold:.12});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+new IntersectionObserver(([e]) => e.isIntersecting && document.getElementById('dlg').classList.add('vis'), {threshold:.4})
+  .observe(document.getElementById('dlg'));
+</script>
+</body>
+</html>
